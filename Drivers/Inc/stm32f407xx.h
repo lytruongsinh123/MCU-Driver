@@ -84,38 +84,38 @@ typedef struct
 
 typedef struct
 {
-    __vo uint32_t CR;         /*!<TODO,                                      Address offset: 0x00 */
-    __vo uint32_t PLLCFGR;    /*!<TODO,                                      Address offset: 0x04 */
-    __vo uint32_t CFGR;       /*!<TODO,                                      Address offset: 0x08 */
-    __vo uint32_t CIR;        /*!<TODO,                                      Address offset: 0x0C */
-    __vo uint32_t AHB1RSTR;   /*!<TODO,                                      Address offset: 0x10 */
-    __vo uint32_t AHB2RSTR;   /*!<TODO,                                      Address offset: 0x14 */
-    __vo uint32_t AHB3RSTR;   /*!<TODO,                                      Address offset: 0x18 */
-    uint32_t      RESERVED0;  /*!<Reserved,                                  Address offset: 0x1C */
-    __vo uint32_t APB1RSTR;   /*!<TODO,                                      Address offset: 0x20 */
-    __vo uint32_t APB2RSTR;   /*!<TODO,                                      Address offset: 0x24 */
-    uint32_t RESERVED1[2];    /*!<Reserved,                                  Address offset: 0x28 */
-    __vo uint32_t AHB1ENR;    /*!<TODO,                                      Address offset: 0x30 */
-    __vo uint32_t AHB2ENR;    /*!<TODO,                                      Address offset: 0x34 */
-    __vo uint32_t AHB3ENR;    /*!<TODO,                                      Address offset: 0x38 */
-    uint32_t      RESERVED2;  /*!<Reserved,                                  Address offset: 0x3C */
-    __vo uint32_t APB1ENR;    /*!<TODO,                                      Address offset: 0x40 */
-    __vo uint32_t APB2ENR;    /*!<TODO,                                      Address offset: 0x44 */
-    uint32_t RESERVED3[2];    /*!<Reserved,                                  Address offset: 0x48 */
-    __vo uint32_t AHB1LPENR;  /*!<TODO,                                      Address offset: 0x50 */
-    __vo uint32_t AHB2LPENR;  /*!<TODO,                                      Address offset: 0x54 */
-    __vo uint32_t AHB3LPENR;  /*!<TODO,                                      Address offset: 0x58 */
-    uint32_t      RESERVED4;  /*!<Reserved,                                  Address offset: 0x5C */
-    __vo uint32_t APB1LPENR;  /*!<TODO,                                      Address offset: 0x60 */
-    __vo uint32_t APB2LPENR;  /*!<TODO,                                      Address offset: 0x64 */
-    uint32_t RESERVED5[2];    /*!<Reserved,                                  Address offset: 0x68 */
-    __vo uint32_t BDCR;       /*!<TODO,                                      Address offset: 0x70 */
-    __vo uint32_t CSR;        /*!<TODO,                                      Address offset: 0x74 */
-    uint32_t RESERVED6[2];    /*!<Reserved,                                  Address offset: 0x78 */
-    __vo uint32_t SSCGR;      /*!<TODO,                                      Address offset: 0x80 */
-    __vo uint32_t PLLI2SCFGR; /*!<TODO,                                      Address offset: 0x84 */
-    __vo uint32_t PLLSAICFGR; /*!<TODO,                                      Address offset: 0x88 */
-    __vo uint32_t DCKCFGR     /*!<TODO,                                      Address offset: 0x8C */
+    __vo uint32_t CR;           /*!<TODO,                                      Address offset: 0x00 */
+    __vo uint32_t PLLCFGR;      /*!<TODO,                                      Address offset: 0x04 */
+    __vo uint32_t CFGR;         /*!<TODO,                                      Address offset: 0x08 */
+    __vo uint32_t CIR;          /*!<TODO,                                      Address offset: 0x0C */
+    __vo uint32_t AHB1RSTR;     /*!<TODO,                                      Address offset: 0x10 */
+    __vo uint32_t AHB2RSTR;     /*!<TODO,                                      Address offset: 0x14 */
+    __vo uint32_t AHB3RSTR;     /*!<TODO,                                      Address offset: 0x18 */
+    uint32_t      RESERVED0;    /*!<Reserved,                                  Address offset: 0x1C */
+    __vo uint32_t APB1RSTR;     /*!<TODO,                                      Address offset: 0x20 */
+    __vo uint32_t APB2RSTR;     /*!<TODO,                                      Address offset: 0x24 */
+    uint32_t      RESERVED1[2]; /*!<Reserved,                                  Address offset: 0x28 */
+    __vo uint32_t AHB1ENR;      /*!<TODO,                                      Address offset: 0x30 */
+    __vo uint32_t AHB2ENR;      /*!<TODO,                                      Address offset: 0x34 */
+    __vo uint32_t AHB3ENR;      /*!<TODO,                                      Address offset: 0x38 */
+    uint32_t      RESERVED2;    /*!<Reserved,                                  Address offset: 0x3C */
+    __vo uint32_t APB1ENR;      /*!<TODO,                                      Address offset: 0x40 */
+    __vo uint32_t APB2ENR;      /*!<TODO,                                      Address offset: 0x44 */
+    uint32_t      RESERVED3[2]; /*!<Reserved,                                  Address offset: 0x48 */
+    __vo uint32_t AHB1LPENR;    /*!<TODO,                                      Address offset: 0x50 */
+    __vo uint32_t AHB2LPENR;    /*!<TODO,                                      Address offset: 0x54 */
+    __vo uint32_t AHB3LPENR;    /*!<TODO,                                      Address offset: 0x58 */
+    uint32_t      RESERVED4;    /*!<Reserved,                                  Address offset: 0x5C */
+    __vo uint32_t APB1LPENR;    /*!<TODO,                                      Address offset: 0x60 */
+    __vo uint32_t APB2LPENR;    /*!<TODO,                                      Address offset: 0x64 */
+    uint32_t      RESERVED5[2]; /*!<Reserved,                                  Address offset: 0x68 */
+    __vo uint32_t BDCR;         /*!<TODO,                                      Address offset: 0x70 */
+    __vo uint32_t CSR;          /*!<TODO,                                      Address offset: 0x74 */
+    uint32_t      RESERVED6[2]; /*!<Reserved,                                  Address offset: 0x78 */
+    __vo uint32_t SSCGR;        /*!<TODO,                                      Address offset: 0x80 */
+    __vo uint32_t PLLI2SCFGR;   /*!<TODO,                                      Address offset: 0x84 */
+    __vo uint32_t PLLSAICFGR;   /*!<TODO,                                      Address offset: 0x88 */
+    __vo uint32_t DCKCFGR;      /*!<TODO,                                      Address offset: 0x8C */
 
 } RCC_RegDef_t;
 /*
