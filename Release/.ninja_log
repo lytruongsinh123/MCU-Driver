@@ -1,0 +1,6 @@
+# ninja log v7
+5	127	8000364778989673	CMakeFiles/Stm32f4xx_Drivers.dir/Startup/startup_stm32f407vgtx.s.obj	93daed346c053ee2
+12	330	8000364779059753	CMakeFiles/Stm32f4xx_Drivers.dir/Sources/main.c.obj	1bd7b36d0ba10325
+25	379	8000364779189307	CMakeFiles/Stm32f4xx_Drivers.dir/Sources/sysmem.c.obj	4127e6a673b834e2
+18	586	8000364779125051	CMakeFiles/Stm32f4xx_Drivers.dir/Sources/syscalls.c.obj	a03e1873ab4d0480
+586	1077	8000364784797871	Stm32f4xx_Drivers.elf	c5bce219c3893927
