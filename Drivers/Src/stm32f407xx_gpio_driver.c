@@ -5,6 +5,9 @@
  *      Author: HUNG
  */
 #include "stm32f407xx_gpio_driver.h"
+
+#include "stm32f407xx.h"
+
 /*
  * Peripheral Clock Setup
  */
@@ -21,12 +24,206 @@
  *
  * @Note                - None
  */
-void GPIO_PCLKControl(GPIO_RegDef_t* pGIOx, uint8_t EnorDi) {}
+void GPIO_PCLKControl(GPIO_RegDef_t* pGIOx, uint8_t EnorDi)
+{
+    if (EnorDi == ENABLE)
+    {
+        if (pGPIOx == GPIOA)
+        {
+            GPIOA_PCLK_EN();
+        }
+        else if (pGIOx == GPIOB)
+        {
+            GPIOB_PCLK_EN();
+        }
+        else if (pGIOx == GPIOC)
+        {
+            GPIOC_PCLK_EN();
+        }
+        else if (pGIOx == GPIOD)
+        {
+            GPIOD_PCLK_EN();
+        }
+        else if (pGIOx == GPIOE)
+        {
+            GPIOE_PCLK_EN();
+        }
+        else if (pGIOx == GPIOF)
+        {
+            GPIOF_PCLK_EN();
+        }
+        else if (pGIOx == GPIOG)
+        {
+            GPIOG_PCLK_EN();
+        }
+        else if (pGIOx == GPIOH)
+        {
+            GPIOH_PCLK_EN();
+        }
+        else if (pGIOx == GPIOI)
+        {
+            GPIOI_PCLK_EN();
+        }
+    }
+    else
+    {
+        if (pGPIOx == GPIOA)
+        {
+            GPIOA_PCLK_DI();
+        }
+        else if (pGIOx == GPIOB)
+        {
+            GPIOB_PCLK_DI();
+        }
+        else if (pGIOx == GPIOC)
+        {
+            GPIOC_PCLK_DI();
+        }
+        else if (pGIOx == GPIOD)
+        {
+            GPIOD_PCLK_DI();
+        }
+        else if (pGIOx == GPIOE)
+        {
+            GPIOE_PCLK_DI();
+        }
+        else if (pGIOx == GPIOF)
+        {
+            GPIOF_PCLK_DI();
+        }
+        else if (pGIOx == GPIOG)
+        {
+            GPIOG_PCLK_DI();
+        }
+        else if (pGIOx == GPIOH)
+        {
+            GPIOH_PCLK_DI();
+        }
+        else if (pGIOx == GPIOI)
+        {
+            GPIOI_PCLK_DI();
+        }
+    }
+}
 /*
  * Init and Deinit
  */
-void GPIO_Init(GPIO_Handle_t* pGPIOHandle) {}
-void GPIO_DeInit(GPIO_RegDef_t* pGIOx) {}
+/****************************************************************************
+ * @fn                  - GPIO_Init
+ *
+ * @brief               - Initializes the GPIO peripheral according to the specified
+ *                        configuration settings in GPIO_Handle_t structure.
+ *
+ * @param[in]           - pGPIOHandle : Pointer to GPIO handle structure
+ * @param[in]           - None
+ * @param[in]           - None
+ *
+ * @return              - None
+ *
+ * @Note                - This function enables and configures:
+ *                        1. GPIO pin modes
+ *                        2. Output type
+ *                        3. Output speed
+ *                        4. Pull-up/Pull-down settings
+ *                        5. Alternate function mode (if selected)
+ */
+void GPIO_Init(GPIO_Handle_t* pGPIOHandle)
+{
+    uint32_t temp = 0;
+    // 1. Configure the mode of gpio pin
+    if (pGPIOHandle->GPIO_PinConfig.GPIO_PinMode <= GPIO_MODE_ANALOG)
+    {
+        // The non interrupt mode
+        temp = (pGPIOHandle->GPIO_PinConfig.GPIO_PinMode << (2 * pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber));
+        pGPIOHandle->pGPIOx->MODER &= ~(0x3 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber); // clear
+        pGPIOHandle->pGPIOx->MODER |= temp;                                                 // set
+    }
+    else
+    {
+        // this part will code later (interrupt mode)
+    }
+    temp = 0;
+    // 2. Configure the speed
+    temp = (pGPIOHandle->GPIO_PinConfig.GPIO_PinSpeed << (2 * pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber));
+    pGPIOHandle->pGPIOx->OSPEEDR &= ~(0x3 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber); // clear
+    pGPIOHandle->pGPIOx->OSPEEDR |= temp;                                                 // set
+    temp = 0;
+    // 3. Configure the pull up/pull down settings
+    temp = (pGPIOHandle->GPIO_PinConfig.GPIO_PinPuPdControl << (2 * pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber));
+    pGPIOHandle->pGPIOx->PUPDR &= ~(0x3 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber); // clear
+    pGPIOHandle->pGPIOx->PUPDR |= temp;                                                 // set
+    temp = 0;
+    // 4. Configure the output type
+    temp = pGPIOHandle->GPIO_PinConfig.GPIO_PinOType << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber;
+    pGPIOHandle->pGPIOx->OTYPER &= ~(0x3 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber); // clear
+    pGPIOHandle->pGPIOx->OTYPER |= temp;                                                 // set
+    temp = 0;
+    // 5. Configure the alt functionality
+    if (pGPIOHandle->GPIO_PinConfig.GPIO_PinMode == GPIO_MODE_ALT)
+    {
+        // Configure the alt function register
+        uint32_t temp1 = 0, temp2 = 0;
+        temp1 = pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber / 8;
+        temp2 = pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber % 8;
+        pGPIOHandle->pGPIOx->AFR[temp1] &= ~(0xF << (4 * temp2));                                           // clear
+        pGPIOHandle->pGPIOx->AFR[temp1] |= (pGPIOHandle->GPIO_PinConfig.GPIO_PinAltFunMode << (4 * temp2)); // set
+    }
+}
+/****************************************************************************
+ * @fn                  - GPIO_DeInit
+ *
+ * @brief               - Resets the selected GPIO peripheral registers
+ *                        to their default reset values.
+ *
+ * @param[in]           - pGPIOx : Pointer to GPIO peripheral base address
+ * @param[in]           - None
+ * @param[in]           - None
+ *
+ * @return              - None
+ *
+ * @Note                - This function performs a peripheral reset using
+ *                        the RCC reset register. All GPIO configuration
+ *                        registers will be restored to their default state.
+ */
+void GPIO_DeInit(GPIO_RegDef_t* pGIOx)
+{
+    if (pGPIOx == GPIOA)
+    {
+        GPIOA_REG_RESET();
+    }
+    else if (pGIOx == GPIOB)
+    {
+        GPIOB_REG_RESET();
+    }
+    else if (pGIOx == GPIOC)
+    {
+        GPIOC_REG_RESET();
+    }
+    else if (pGIOx == GPIOD)
+    {
+        GPIOD_REG_RESET();
+    }
+    else if (pGIOx == GPIOE)
+    {
+        GPIOE_REG_RESET();
+    }
+    else if (pGIOx == GPIOF)
+    {
+        GPIOF_REG_RESET();
+    }
+    else if (pGIOx == GPIOG)
+    {
+        GPIOG_REG_RESET();
+    }
+    else if (pGIOx == GPIOH)
+    {
+        GPIOH_REG_RESET();
+    }
+    else if (pGIOx == GPIOI)
+    {
+        GPIOI_REG_RESET();
+    }
+}
 /*
  * Data read and write
  */
