@@ -227,11 +227,104 @@ void GPIO_DeInit(GPIO_RegDef_t* pGIOx)
 /*
  * Data read and write
  */
-uint8_t  GPIO_ReadFromInputPin(GPIO_RegDef_t* pGIOx, uint8_t PinNumber) {}
-uint16_t GPIO_ReadFromInputPort(GPIO_RegDef_t* pGIOx) {}
-void     GPIO_WriteToOutputPin(GPIO_RegDef_t* pGIOx, uint8_t PinNumber, uint8_t value) {}
-void     GPIO_WriteToOutputPort(PIO_RegDef_t* pGIOx, uint16_t value) {}
-void     GPIO_ToggleOutputPin(GPIO_RegDef_t* pGIOx, uint8_t PinNumber) {}
+/****************************************************************************
+ * @fn                  - GPIO_ReadFromInputPin
+ *
+ * @brief               - Reads the logic level from the selected GPIO input pin.
+ *
+ * @param[in]           - pGPIOx     : Pointer to GPIO peripheral base address
+ * @param[in]           - PinNumber : GPIO pin number to read
+ *
+ * @return              - uint8_t : Returns 0 or 1 depending on pin state
+ *
+ * @Note                - Reads the corresponding bit from the IDR
+ *                        (Input Data Register).
+ */
+uint8_t GPIO_ReadFromInputPin(GPIO_RegDef_t* pGIOx, uint8_t PinNumber)
+{
+    uint8_t value;
+    value = (uint8_t)((pGIOx->IDR >> PinNumber) & 0x00000001);
+    return value;
+}
+/****************************************************************************
+ * @fn                  - GPIO_ReadFromInputPort
+ *
+ * @brief               - Reads the current value of the GPIO input port.
+ *
+ * @param[in]           - pGPIOx : Pointer to GPIO peripheral base address
+ *
+ * @return              - uint16_t : Value of the GPIO input data register (IDR)
+ *
+ * @Note                - This function returns the logic states of all GPIO
+ *                        pins in the selected port.
+ */
+uint16_t GPIO_ReadFromInputPort(GPIO_RegDef_t* pGIOx)
+{
+    uint16_t value;
+    value = (uint16_t)pGIOx->IDR;
+    return value;
+}
+/****************************************************************************
+ * @fn                  - GPIO_WriteToOutputPin
+ *
+ * @brief               - Writes a logic value to the selected GPIO output pin.
+ *
+ * @param[in]           - pGPIOx     : Pointer to GPIO peripheral base address
+ * @param[in]           - PinNumber : GPIO pin number to write
+ * @param[in]           - value     : Value to be written (GPIO_PIN_SET or GPIO_PIN_RESET)
+ *
+ * @return              - None
+ *
+ * @Note                - This function sets or clears the corresponding bit
+ *                        in the ODR (Output Data Register).
+ */
+void GPIO_WriteToOutputPin(GPIO_RegDef_t* pGIOx, uint8_t PinNumber, uint8_t value)
+{
+    if (value == GPIO_PIN_SET)
+    {
+        // write 1 to ODR at the bit field corresponding to the pin number
+        pGIOx->ODR |= (1 << PinNumber)
+    }
+    else
+    {
+        // write 0 to ODR at the bit field corresponding to the pin number
+        pGIOx->ODR &= ~(1 << PinNumber)
+    }
+}
+/****************************************************************************
+ * @fn                  - GPIO_WriteToOutputPort
+ *
+ * @brief               - Writes a value to the GPIO output port.
+ *
+ * @param[in]           - pGPIOx : Pointer to GPIO peripheral base address
+ * @param[in]           - value  : 16-bit value to be written to the output port
+ *
+ * @return              - None
+ *
+ * @Note                - This function updates the entire ODR
+ *                        (Output Data Register) at once.
+ */
+void GPIO_WriteToOutputPort(PIO_RegDef_t* pGIOx, uint16_t value)
+{
+    pGIOx->ODR = value;
+}
+/****************************************************************************
+ * @fn                  - GPIO_ToggleOutputPin
+ *
+ * @brief               - Toggles the logic state of the selected GPIO output pin.
+ *
+ * @param[in]           - pGPIOx     : Pointer to GPIO peripheral base address
+ * @param[in]           - PinNumber : GPIO pin number to toggle
+ *
+ * @return              - None
+ *
+ * @Note                - The corresponding bit in the ODR register is
+ *                        inverted using XOR operation.
+ */
+void GPIO_ToggleOutputPin(GPIO_RegDef_t* pGIOx, uint8_t PinNumber)
+{
+    pGIOx->ODR ^= (1 << PinNumber);
+}
 /*
  * IRQ Configuration and ISR handling
  */
